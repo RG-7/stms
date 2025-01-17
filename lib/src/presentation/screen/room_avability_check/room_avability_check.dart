@@ -12,6 +12,7 @@ class RoomAvabilityCheck extends StatefulWidget {
 class _RoomAvabilityCheckState extends State<RoomAvabilityCheck> {
   DateTime selectedDate = DateTime.now();
   String selectedBuildingId = allBuilding.first.buildingId;
+  bool active = false;
 
   Future<void> _showDatePicker() async {
     // Open the picker with the current selected date
@@ -48,6 +49,14 @@ class _RoomAvabilityCheckState extends State<RoomAvabilityCheck> {
 
   @override
   Widget build(BuildContext context) {
+    if (!active) {
+      return const Scaffold(
+        backgroundColor: AppColor.white,
+        body: Center(
+          child: Text("Coming Soon!"),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFF9F9FB),

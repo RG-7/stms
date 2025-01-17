@@ -17,9 +17,18 @@ class _AddClassState extends State<AddClass> {
   String selectedClass =
       '${allClasses.first.department} ${allClasses.first.branch} ${allClasses.first.subgroup}';
   Subject selectedSubject = allSubjects.first;
+  bool active = false;
 
   @override
   Widget build(BuildContext context) {
+    if (!active) {
+      return const Scaffold(
+        backgroundColor: AppColor.white,
+        body: Center(
+          child: Text("Coming Soon!"),
+        ),
+      );
+    }
     return Scaffold(
       backgroundColor: AppColor.white,
       appBar: AppBar(
@@ -175,15 +184,15 @@ class _AddClassState extends State<AddClass> {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          color: Colors.white ,
-          padding: const EdgeInsets.symmetric(horizontal: 25,vertical: 15),
+          color: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
           height: 300,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title,
-                style:h1StyleBlue,
+                style: h1StyleBlue,
               ),
               Expanded(
                 child: ListView.builder(
@@ -192,7 +201,10 @@ class _AddClassState extends State<AddClass> {
                     final item = options[index];
                     return ListTile(
                       leading: getLeading(item),
-                      title: Text(getLabel(item),style: bodyStyle2,),
+                      title: Text(
+                        getLabel(item),
+                        style: bodyStyle2,
+                      ),
                       onTap: () {
                         onSelected(item);
                         Navigator.pop(context); // Close the bottom sheet

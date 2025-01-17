@@ -236,7 +236,7 @@ class _ScheduleCard2State extends State<ScheduleCard2> {
                                 style: bodyStyle1.copyWith(fontSize: 16),
                               ),
                               Text(
-                                'LT401,4th Floor',
+                                widget.schedule.venue,
                                 style: bodyStyle2Grey.copyWith(fontSize: 14),
                               ),
                             ],

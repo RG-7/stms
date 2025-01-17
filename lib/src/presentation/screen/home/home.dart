@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:ttms_student/src/data/provider/schedule.dart';
 import 'package:ttms_student/src/data/model/schedule.dart';
 import 'package:ttms_student/src/data/provider/user.dart';
+import 'package:ttms_student/src/presentation/screen/check_slot/check_slot.dart';
 import 'package:ttms_student/src/presentation/screen/room_avability_check/room_avability_check.dart';
 import 'package:ttms_student/src/presentation/widget/common_loader.dart';
 import '../../../../export.dart';
@@ -83,7 +84,14 @@ class _HomePageState extends State<HomePage> {
                   child: const Icon(Icons.group_rounded, color: AppColor.white),
                   backgroundColor: Colors.red,
                   label: 'Check Slot',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CheckSlot(),
+                      ),
+                    );
+                  },
                 ),
               ],
             )

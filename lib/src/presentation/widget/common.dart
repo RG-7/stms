@@ -14,7 +14,7 @@ class Common {
             style: h1StyleBlack.copyWith(fontSize: 18),
             children: [
               TextSpan(
-                text: ' AM',
+                text: ' ${time.split(" ").last}',
                 style: h1StyleBlack.copyWith(
                     fontSize: 18, color: AppColor.lightGrey),
               )

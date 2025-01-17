@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import '/export.dart';
 
 class CheckSlot extends StatefulWidget {
   const CheckSlot({super.key});
@@ -11,8 +11,9 @@ class _CheckSlotState extends State<CheckSlot> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Column(
-        children: [],
+      backgroundColor: AppColor.white,
+      body: Center(
+        child: Text("Coming Soon!"),
       ),
     );
   }
