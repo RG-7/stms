@@ -4,23 +4,29 @@ import 'dart:convert';
 class Schedule {
   String? id;
   String courseCode;
+  String courseName;
   String facultyCode;
-  String date;
-  String startTime;
-  String type;
-  String subGroup;
   String venue;
+  String subGroup;
+  String department;
+  String startTime;
+  String duration;
+  String date;
+  String type;
 
   // Constructor
   Schedule({
-    required this.courseCode,
     this.id,
+    required this.courseCode,
+    required this.courseName,
     required this.facultyCode,
-    required this.date,
-    required this.startTime,
-    required this.type,
-    required this.subGroup,
     required this.venue,
+    required this.subGroup,
+    required this.department,
+    required this.startTime,
+    required this.duration,
+    required this.date,
+    required this.type,
   });
 
   // Method to convert a TimeTable object to a Map (for storage)
@@ -40,14 +46,17 @@ class Schedule {
   // Factory method to create a TimeTable object from a Map (for retrieval)
   factory Schedule.fromMap(Map<String, dynamic> map) {
     return Schedule(
-      courseCode: map['courseCode'] ?? '',
-      id: map['_id'] ?? '',
-      facultyCode: map['facultyCode'] ?? '',
-      date: map['date'] ?? '',
-      startTime: map['startTime'] ?? '',
-      type: map['type'] ?? '',
-      subGroup: map['subGroup'] ?? '',
-      venue: map['venue'] ?? '',
+      id: map['ID'] ?? '',
+      courseCode: map['CourseCode'] ?? '',
+      courseName: map['CourseName'] ?? '',
+      facultyCode: map['FacultyCode'] ?? '',
+      venue: map['Venue'] ?? '',
+      subGroup: map['Subgroup'] ?? '',
+      department: map['Department'] ?? '',
+      startTime: map['Time'] ?? '',
+      duration: map['Duration'] ?? '',
+      date: map['Date'] ?? '',
+      type: map['Type'] ?? '',
     );
   }
 
