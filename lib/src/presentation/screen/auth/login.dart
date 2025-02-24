@@ -37,15 +37,17 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  if (height > 650)
+                    const SizedBox(
+                      height: 50,
+                    ),
                   // CIRCLE AVTAR OR LOGO
-                  const Align(
+                  Align(
                     alignment: Alignment.center,
                     child: CircleAvatar(
                       backgroundColor: AppColor.lightGrey,
                       radius: 50,
+                      child: Image.asset("assets/logo-1.png"),
                     ),
                   ),
                   const SizedBox(
@@ -60,9 +62,10 @@ class _LoginPageState extends State<LoginPage> {
                       style: h1StyleBlue,
                     ),
                   ),
-                  const SizedBox(
-                    height: 50.0,
-                  ),
+                  if (height > 650)
+                    const SizedBox(
+                      height: 50.0,
+                    ),
 
                   // LOGIN TEXT
                   Text(
