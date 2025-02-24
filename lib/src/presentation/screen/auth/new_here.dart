@@ -58,11 +58,7 @@ class _NewHereState extends State<NewHere> {
               // EMAIL TEXTFIELD
               AppTextField(
                 controller: widget.authProvider.emailController,
-                validator: (value) {
-                  final RegExp regex =
-                      RegExp(r'^[a-zA-Z0-9._%+-]+@thapar\.edu$');
-                  return regex.hasMatch(value);
-                },
+                validator: validate,
                 icon: CupertinoIcons.mail,
                 hintText: '***@thapar.edu',
                 errorMessage: AppData.emailErrorMessage,
@@ -99,16 +95,21 @@ class _NewHereState extends State<NewHere> {
               // submit button
               LightBlueTextButton(
                 onpressed: () {
-                  widget.authProvider.sendOTP(context);
+                  if (validate(
+                    widget.authProvider.emailController.text.trim(),
+                  )) {
+                    widget.authProvider.sendOTP(context);
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => OTP(
-                        email: widget.authProvider.emailController.text.trim(),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OTP(
+                          email:
+                              widget.authProvider.emailController.text.trim(),
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  }
                 },
                 text: AppData.getOTPTitle,
               ),
@@ -117,5 +118,10 @@ class _NewHereState extends State<NewHere> {
         ),
       ),
     );
+  }
+
+  bool validate(value) {
+    final RegExp regex = RegExp(r'^[a-zA-Z0-9._%+-]+@thapar\.edu$');
+    return regex.hasMatch(value);
   }
 }
