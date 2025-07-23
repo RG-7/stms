@@ -25,7 +25,7 @@ class _AddClassState extends State<AddClass> {
       return const Scaffold(
         backgroundColor: AppColor.white,
         body: Center(
-          child: Text("Coming Soon!"),
+          child: Text('Coming Soon!'),
         ),
       );
     }

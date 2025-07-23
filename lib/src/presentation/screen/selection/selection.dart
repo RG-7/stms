@@ -83,7 +83,7 @@ class _SelectSubGroupState extends State<SelectSubGroup> {
                       controller: _searchController,
                       readOnly: true, // Disable manual typing
                       decoration: const InputDecoration(
-                        labelText: "Search SubGroup",
+                        labelText: 'Search SubGroup',
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.search),
                       ),
@@ -150,7 +150,7 @@ class _SelectSubGroupState extends State<SelectSubGroup> {
                             : const Padding(
                                 padding: EdgeInsets.all(10.0),
                                 child: Text(
-                                  "No results found",
+                                  'No results found',
                                   style: TextStyle(color: Colors.grey),
                                 ),
                               ),
@@ -166,7 +166,7 @@ class _SelectSubGroupState extends State<SelectSubGroup> {
                   ),
                 ),
                 child: Text(
-                  "Login Instead",
+                  'Login Instead',
                   style: bodyStyle2.copyWith(fontSize: width <= 360 ? 16 : 20),
                 ),
               ),

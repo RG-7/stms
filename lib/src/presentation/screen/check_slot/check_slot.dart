@@ -13,7 +13,7 @@ class _CheckSlotState extends State<CheckSlot> {
     return const Scaffold(
       backgroundColor: AppColor.white,
       body: Center(
-        child: Text("Coming Soon!"),
+        child: Text('Coming Soon!'),
       ),
     );
   }

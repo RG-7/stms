@@ -1,7 +1,4 @@
 
-
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter_svg/svg.dart';
 
 import '../../../export.dart';
@@ -36,7 +33,7 @@ class _ReadOnlyTextFieldState extends State<ReadOnlyTextField> {
                 padding: const EdgeInsets.all(12.0),
                 child: SvgPicture.asset(
                   widget.svgPath!, // Assuming hintText is the path to the SVG
-                  color: AppColor.lightBlue,
+                  colorFilter: const ColorFilter.mode(AppColor.lightBlue, BlendMode.srcIn),
                   width: 24,
                   height: 24,
                 ),

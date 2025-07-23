@@ -22,7 +22,7 @@ class AuthServices {
   }) async {
     try {
       http.Response res = await http.post(
-        Uri.parse("$baseUrl/api/signin"),
+        Uri.parse('$baseUrl/auth/login'),
         body: jsonEncode({
           'email': email,
           'password': password,
@@ -69,7 +69,7 @@ class AuthServices {
   }) async {
     try {
       http.Response res = await http.post(
-        Uri.parse("$baseUrl/api/user/otp"),
+        Uri.parse('$baseUrl/api/user/otp'),
         body: jsonEncode({'email': email}),
         headers: {'Content-Type': 'application/json; charset=UTF-8'},
       );
@@ -111,7 +111,7 @@ class AuthServices {
     String message = '';
     try {
       http.Response res = await http.post(
-        Uri.parse("$baseUrl/api/user/otp/verify"),
+        Uri.parse('$baseUrl/api/user/otp/verify'),
         body: jsonEncode({'email': email, 'otp': otp.toString()}),
         headers: {'Content-Type': 'application/json; charset=UTF-8'},
       );
@@ -147,7 +147,7 @@ class AuthServices {
     String error = '';
     try {
       http.Response res = await http.post(
-        Uri.parse("$baseUrl/api/user/setPassword"),
+        Uri.parse('$baseUrl/api/user/setPassword'),
         body: jsonEncode(
             {'email': email.toString(), 'password': newPassword.toString()}),
         headers: {'Content-Type': 'application/json; charset=UTF-8'},

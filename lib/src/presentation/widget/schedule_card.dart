@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../.././../export.dart';
@@ -18,7 +16,7 @@ class ScheduleCard extends StatelessWidget {
       width: double.infinity,
       height: 150,
       decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(0.1),
+        color: Colors.grey.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
@@ -154,7 +152,7 @@ class _ScheduleCard2State extends State<ScheduleCard2> {
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                  color: AppColor.lightGrey.withOpacity(0.6), width: 1),
+                  color: AppColor.lightGrey.withValues(alpha: 0.6), width: 1),
             ),
             child: Column(
               children: [
@@ -329,7 +327,7 @@ class _ScheduleCard3State extends State<ScheduleCard3> {
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                  color: AppColor.lightGrey.withOpacity(0.6), width: 1),
+                  color: AppColor.lightGrey.withValues(alpha: 0.6), width: 1),
             ),
             child: Column(
               children: [

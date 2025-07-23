@@ -53,7 +53,7 @@ class _RoomAvabilityCheckState extends State<RoomAvabilityCheck> {
       return const Scaffold(
         backgroundColor: AppColor.white,
         body: Center(
-          child: Text("Coming Soon!"),
+          child: Text('Coming Soon!'),
         ),
       );
     }
@@ -249,18 +249,18 @@ class _RoomAvabilityCheckState extends State<RoomAvabilityCheck> {
 
   String _getMonthString(DateTime date) {
     const List<String> months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
     ];
     return months[date.month - 1];
   }

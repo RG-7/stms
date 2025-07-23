@@ -5,7 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ttms_student/src/data/provider/auth.dart';
-import 'package:ttms_student/src/data/provider/user.dart';
+import '/src/data/provider/user.dart';
 import 'package:ttms_student/src/presentation/screen/extra/refresh_page.dart';
 import 'package:ttms_student/src/services/auth.dart';
 import 'src/data/provider/connectivity.dart';
@@ -14,7 +14,7 @@ import 'src/presentation/screen/selection/selection.dart';
 import 'export.dart';
 
 void main() async {
-  await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: '.env');
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => ScheduleProvider()),

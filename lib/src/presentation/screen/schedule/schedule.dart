@@ -1,6 +1,4 @@
 
-// ignore_for_file: deprecated_member_use
-
 import 'package:provider/provider.dart';
 import 'package:ttms_student/src/presentation/widget/common_loader.dart';
 
@@ -119,7 +117,7 @@ class _SchedulePageState extends State<SchedulePage> {
                     height: 5,
                   ),
                   Divider(
-                    color: Colors.grey.withOpacity(0.1),
+                    color: Colors.grey.withValues(alpha: 0.1),
                   ),
                   Consumer<ScheduleProvider>(
                     builder: (context, scheduleProvider, child) {
@@ -188,18 +186,18 @@ class _SchedulePageState extends State<SchedulePage> {
 
   String _getMonthString(DateTime date) {
     const List<String> months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
     ];
     return months[date.month - 1];
   }

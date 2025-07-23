@@ -17,7 +17,7 @@ class RefreshPage extends StatelessWidget {
       // Show a snackbar if the internet is still unavailable
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("No internet connection. Please try again."),
+          content: Text('No internet connection. Please try again.'),
         ),
       );
     }

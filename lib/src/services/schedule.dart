@@ -20,15 +20,10 @@ class ScheduleService {
       String date, BuildContext context) async {
     final sched = Provider.of<ScheduleProvider>(context, listen: false);
     List<Schedule> productList = [];
-    final Uri url = Uri.parse('$baseUrl/api/student/tt');
+    final Uri url = Uri.parse('$baseUrl/tt/subgroup/${sched.selectedSubGroup}/2025-01-20');
     try {
       http.Response res = await http.get(
         Uri.parse('$url'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'date': date,
-          'subgroup': sched.selectedSubGroup!,
-        },
       );
 
       httpErrorhandle(

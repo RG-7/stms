@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: CircleAvatar(
                       backgroundColor: AppColor.lightGrey,
                       radius: 50,
-                      child: Image.asset("assets/logo-1.png"),
+                      child: Image.asset('assets/logo-1.png'),
                     ),
                   ),
                   const SizedBox(

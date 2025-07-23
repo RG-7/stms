@@ -82,7 +82,7 @@ class AuthProvider extends ChangeNotifier {
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("OTP cannot be empty.")),
+        const SnackBar(content: Text('OTP cannot be empty.')),
       );
     }
   }
@@ -96,7 +96,7 @@ class AuthProvider extends ChangeNotifier {
     if (_otps.length != 4) {
       // Only check the length
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please fill in all the OTP fields.")),
+        const SnackBar(content: Text('Please fill in all the OTP fields.')),
       );
       return;
     }

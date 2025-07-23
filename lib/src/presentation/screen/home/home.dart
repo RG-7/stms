@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +23,7 @@ class _HomePageState extends State<HomePage> {
     ScheduleProvider scheduleP = context.read<ScheduleProvider>(); // Access provider directly
     UserProvider user = context.read<UserProvider>(); // Access provider directly
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (user.user.designation == "Professor") {
+      if (user.user.designation == 'Professor') {
         scheduleP.updateDate(DateTime.now(), context);
         scheduleP.fetchTTOfFcaultyByDateAndCode(context);
       } else {
@@ -157,7 +155,7 @@ class _HomePageState extends State<HomePage> {
                         border: Border.all(width: 1, color: AppColor.white),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.blueGrey.withOpacity(0.2),
+                            color: Colors.blueGrey.withValues(alpha: 0.2),
                             blurRadius: 12,
                             spreadRadius: 8,
                           ),
@@ -180,12 +178,12 @@ class _HomePageState extends State<HomePage> {
                           style: h1StyleBlue.copyWith(fontSize: 30),
                         ),
                         Text(
-                          "Here is a list of schedule",
+                          'Here is a list of schedule',
                           style: bodyStyle2.copyWith(
                               color: Colors.blueGrey, fontSize: 12),
                         ),
                         Text(
-                          "you need to check...",
+                          'you need to check...',
                           style: bodyStyle2.copyWith(
                               color: Colors.blueGrey, fontSize: 12),
                         ),

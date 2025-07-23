@@ -43,35 +43,35 @@ class ScheduleProvider extends ChangeNotifier {
 
   // List of groups/subgroups
   final List<String> groups = [
-    "2E1A",
-    "2E1B",
-    "2E1C",
-    "2D1A",
-    "2D1B",
-    "2D1C",
-    "2S1A",
-    "2S1B",
-    "2S1C",
-    "2S1D",
-    "2S1E",
-    "2H1A",
-    "2H1B",
-    "2H1C",
-    "2IUNSW",
-    "2A1A",
-    "2A1B",
-    "2G1A",
-    "2G1B",
-    "2G1C",
-    "2G1D",
-    "2G1E",
-    "2J1A",
-    "2R1A",
-    "2R1B",
-    "2R1C",
-    "2V1A",
-    "2V1B",
-    "2V1C",
+    '2E1A',
+    '2E1B',
+    '2E1C',
+    '2D1A',
+    '2D1B',
+    '2D1C',
+    '2S1A',
+    '2S1B',
+    '2S1C',
+    '2S1D',
+    '2S1E',
+    '2H1A',
+    '2H1B',
+    '2H1C',
+    '2IUNSW',
+    '2A1A',
+    '2A1B',
+    '2G1A',
+    '2G1B',
+    '2G1C',
+    '2G1D',
+    '2G1E',
+    '2J1A',
+    '2R1A',
+    '2R1B',
+    '2R1C',
+    '2V1A',
+    '2V1B',
+    '2V1C',
   ];
 
   // Schedule data stored as a list of Schedule objects
@@ -118,7 +118,7 @@ class ScheduleProvider extends ChangeNotifier {
   Future<void> fetchSubGroupSchedule(BuildContext context) async {
     // Check only subgroup selection (No lecture group needed)
     if (_selectedSubGroup == null) {
-      _error = "Please select a subgroup";
+      _error = 'Please select a subgroup';
       notifyListeners();
       return;
     }
@@ -176,7 +176,7 @@ class ScheduleProvider extends ChangeNotifier {
     }
 
     final user = Provider.of<UserProvider>(context, listen: false);
-    if (user.user.designation == "Professor") {
+    if (user.user.designation == 'Professor') {
       fetchTTOfFcaultyByDateAndCode(context);
     } else {
       fetchSubGroupSchedule(context);

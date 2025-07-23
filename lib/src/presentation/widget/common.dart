@@ -3,14 +3,14 @@ import '../../../export.dart';
 class Common {
   const Common._();
 
-  static Row palletTimeRow({String time = "08:00 AM", String type = "L"}) {
+  static Row palletTimeRow({String time = '08:00 AM', String type = 'L'}) {
     return Row(
       children: [
         Common.sideOrangePallet(),
         const SizedBox(width: 15),
         RichText(
           text: TextSpan(
-            text: time.split(" ").first,
+            text: time.split(' ').first,
             style: h1StyleBlack.copyWith(fontSize: 18),
             children: [
               TextSpan(
