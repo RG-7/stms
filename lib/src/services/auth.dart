@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:ttms_student/main.dart';
 import 'package:ttms_student/src/data/provider/schedule.dart';
+import 'package:ttms_student/src/presentation/screen/selection/selection.dart';
 import '../../core/constants/error_handling.dart';
 import '../../core/constants/utlis.dart';
 import '../../export.dart';
@@ -21,39 +22,74 @@ class AuthServices {
     required String password,
   }) async {
     try {
+      print('Logging in with email: $email and password: $password');
+      print('Base URL: $baseUrl');
+
       http.Response res = await http.post(
-        Uri.parse('$baseUrl/auth/login'),
+        Uri.parse('$baseUrl/login'),
         body: jsonEncode({
           'email': email,
           'password': password,
-        }), // This is the correct way.
+        }),
         headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
+          'Content-Type': 'application/json',
         },
       );
+
+      // Debug: Show full details of the response
+      print('Status Code: ${res.statusCode}');
+      print('Response Body: ${res.body}');
 
       httpErrorhandle(
         resposne: res,
         context: context,
         onSuccess: () async {
+          print('✅ Login successful, processing data...');
+
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          Provider.of<UserProvider>(context, listen: false).setUser(res.body);
-          //print('\n\n\n${jsonDecode(res.body)['token']}\n\n\n');
-          await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
-          getUserData(context);
+          final responseData = jsonDecode(res.body);
+
+          // Store the token
+          await prefs.setString('x-auth-token', responseData['token']);
+          print('Token saved: ${responseData['token']}');
+
+          // Store faculty data in provider
+          Provider.of<UserProvider>(context, listen: false)
+              .setUser(jsonEncode(responseData['faculty']));
+
+          // Optionally store faculty in SharedPreferences
+          await prefs.setString(
+            'faculty-data',
+            jsonEncode(responseData['faculty']),
+          );
+          print('Faculty data saved: ${responseData['faculty']}');
+
+          // Reset ScheduleProvider
           ScheduleProvider schedProvider =
               Provider.of<ScheduleProvider>(context, listen: false);
           schedProvider.updateIndex(0);
           schedProvider.clearSelectedSubGroup();
+
+          // Determine user type
+          final userDesignation =
+              responseData['faculty']['designation'].toString().toLowerCase();
+
+          final isFaculty = userDesignation.contains('professor') ||
+              userDesignation.contains('dean') ||
+              userDesignation.contains('hod') ||
+              userDesignation.contains('faculty');
+
           Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const MyApp(),
-              ),
-              (route) => false);
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    isFaculty ? const DashBoard() : const SelectionScreen()),
+            (route) => false,
+          );
         },
       );
     } catch (e) {
+      print('❌ Exception during login: $e');
       showSnackBar(
         context,
         'Unable to login. Please check your email and password',
@@ -83,21 +119,38 @@ class AuthServices {
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           //print('\n\n\n${jsonDecode(res.body)['token']}\n\n\n');
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
-          getUserData(context);
+          if (res.statusCode == 200 && jsonDecode(res.body)['user'] != null) {
+            var userProvider =
+                Provider.of<UserProvider>(context, listen: false);
+            var schedProvider =
+                Provider.of<ScheduleProvider>(context, listen: false);
+
+            schedProvider.updateAsTeacher();
+
+            // Convert response['user'] (Map) to JSON string
+            String userJson = jsonEncode(jsonDecode(res.body)['user']);
+            userProvider.setUser(userJson);
+          }
           ScheduleProvider schedProvider =
               Provider.of<ScheduleProvider>(context, listen: false);
           schedProvider.updateIndex(0);
           schedProvider.clearSelectedSubGroup();
+          final userProvider =
+              Provider.of<UserProvider>(context, listen: false);
+          print(userProvider.user.toJson());
+          print('User token: ${userProvider.token}');
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
                 builder: (context) => const MyApp(),
               ),
               (route) => false);
+
+          // print user data
         },
       );
     } catch (e) {
-      showSnackBar(context,'Unable to send OTP. Please check your email');
+      showSnackBar(context, 'Unable to send OTP. Please check your email');
     }
   }
 
