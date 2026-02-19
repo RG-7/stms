@@ -5,9 +5,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:ttms_student/main.dart';
-import 'package:ttms_student/src/data/provider/schedule.dart';
-import 'package:ttms_student/src/presentation/screen/selection/selection.dart';
+import '/main.dart';
+import '/src/data/provider/schedule.dart';
+import '/src/presentation/screen/selection/selection.dart';
 import '../../core/constants/error_handling.dart';
 import '../../core/constants/utlis.dart';
 import '../../export.dart';
@@ -22,8 +22,8 @@ class AuthServices {
     required String password,
   }) async {
     try {
-      print('Logging in with email: $email and password: $password');
-      print('Base URL: $baseUrl');
+      debugPrint('Logging in with email: $email and password: $password');
+      debugPrint('Base URL: $baseUrl');
 
       http.Response res = await http.post(
         Uri.parse('$baseUrl/login'),
@@ -37,21 +37,21 @@ class AuthServices {
       );
 
       // Debug: Show full details of the response
-      print('Status Code: ${res.statusCode}');
-      print('Response Body: ${res.body}');
+      debugPrint('Status Code: ${res.statusCode}');
+      debugPrint('Response Body: ${res.body}');
 
       httpErrorhandle(
         resposne: res,
         context: context,
         onSuccess: () async {
-          print('✅ Login successful, processing data...');
+          debugPrint('Login successful, processing data...');
 
           SharedPreferences prefs = await SharedPreferences.getInstance();
           final responseData = jsonDecode(res.body);
 
           // Store the token
           await prefs.setString('x-auth-token', responseData['token']);
-          print('Token saved: ${responseData['token']}');
+          debugPrint('Token saved: ${responseData['token']}');
 
           // Store faculty data in provider
           Provider.of<UserProvider>(context, listen: false)
@@ -62,7 +62,7 @@ class AuthServices {
             'faculty-data',
             jsonEncode(responseData['faculty']),
           );
-          print('Faculty data saved: ${responseData['faculty']}');
+          debugPrint('Faculty data saved: ${responseData['faculty']}');
 
           // Reset ScheduleProvider
           ScheduleProvider schedProvider =
@@ -89,7 +89,7 @@ class AuthServices {
         },
       );
     } catch (e) {
-      print('❌ Exception during login: $e');
+      debugPrint('Exception during login: $e');
       showSnackBar(
         context,
         'Unable to login. Please check your email and password',
@@ -137,8 +137,8 @@ class AuthServices {
           schedProvider.clearSelectedSubGroup();
           final userProvider =
               Provider.of<UserProvider>(context, listen: false);
-          print(userProvider.user.toJson());
-          print('User token: ${userProvider.token}');
+            debugPrint(userProvider.user.toJson());
+            debugPrint('User token: ${userProvider.token}');
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(

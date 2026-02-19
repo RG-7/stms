@@ -1,4 +1,4 @@
-import 'package:ttms_student/src/services/auth.dart';
+import '/src/services/auth.dart';
 import '/export.dart';
 
 class AuthProvider extends ChangeNotifier {
