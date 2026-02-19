@@ -5,6 +5,11 @@ on:
     branches: [ sliet, main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   generate-docs:
     name: Generate Documentation
@@ -240,6 +245,8 @@ jobs:
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/sliet' || github.ref == 'refs/heads/main'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
+          cname: docs.sliet-stms.tech
