@@ -20,7 +20,6 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'latest'
           channel: 'stable'
       
       - name: Get current dependencies
@@ -78,7 +77,6 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'latest'
           channel: 'stable'
       
       - name: Get dependencies
@@ -110,7 +108,6 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'latest'
           channel: 'stable'
       
       - name: Get dependencies
