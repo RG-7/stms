@@ -15,12 +15,12 @@ void main() {
 
     test('Color values are valid', () {
       // Verify that colors have valid values
-      expect(AppColor.darkBlue.value, isPositive);
-      expect(AppColor.deepBlue.value, isPositive);
-      expect(AppColor.lightBlue.value, isPositive);
-      expect(AppColor.lightOrange.value, isPositive);
-      expect(AppColor.green.value, isPositive);
-      expect(AppColor.red.value, isPositive);
+      expect(AppColor.darkBlue.toARGB32(), isPositive);
+      expect(AppColor.deepBlue.toARGB32(), isPositive);
+      expect(AppColor.lightBlue.toARGB32(), isPositive);
+      expect(AppColor.lightOrange.toARGB32(), isPositive);
+      expect(AppColor.green.toARGB32(), isPositive);
+      expect(AppColor.red.toARGB32(), isPositive);
     });
 
     test('Colors are Color type', () {
@@ -52,7 +52,7 @@ void main() {
     test('Color system is properly organized', () {
       // Verify color organization
       const testColor = AppColor.darkBlue;
-      expect(testColor.value, isPositive);
+      expect(testColor.toARGB32(), isPositive);
     });
   });
 }
