@@ -1,5 +1,5 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
-import 'package:ttms_student/src/presentation/widget/time_row2.dart';
+import '/src/presentation/widget/time_row2.dart';
 import '../../../../export.dart';
 
 class RoomAvabilityCheck extends StatefulWidget {

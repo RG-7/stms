@@ -21,7 +21,7 @@ class SplashScreen extends StatelessWidget {
               ),
               //const SizedBox(height: 20),
               Text(
-                'TTMS',
+                'STMS',
                 style: GoogleFonts.montserrat(
                   color: AppColor.black,
                   fontSize: 45,

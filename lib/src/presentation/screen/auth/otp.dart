@@ -1,6 +1,6 @@
 import 'package:provider/provider.dart';
-import 'package:ttms_student/src/data/provider/auth.dart';
-import 'package:ttms_student/src/presentation/widget/otp_boxes.dart';
+import '/src/data/provider/auth.dart';
+import '/src/presentation/widget/otp_boxes.dart';
 
 import '../../../../export.dart';
 

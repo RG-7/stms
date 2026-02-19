@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:ttms_student/src/data/provider/auth.dart';
+import '/src/data/provider/auth.dart';
 
 import '../../../../export.dart';
 
@@ -59,8 +59,19 @@ class _NewHereState extends State<NewHere> {
               AppTextField(
                 controller: widget.authProvider.emailController,
                 validator: validate,
+                onChanged: (value) {
+                  final normalizedValue = AppData.normalizeEmail(value);
+                  if (normalizedValue != value) {
+                    widget.authProvider.emailController.value =
+                        TextEditingValue(
+                      text: normalizedValue,
+                      selection: TextSelection.collapsed(
+                          offset: normalizedValue.length),
+                    );
+                  }
+                },
                 icon: CupertinoIcons.mail,
-                hintText: '***@thapar.edu',
+                hintText: '***@sliet.edu',
                 errorMessage: AppData.emailErrorMessage,
               ),
               const SizedBox(
@@ -95,7 +106,7 @@ class _NewHereState extends State<NewHere> {
               // submit button
               LightBlueTextButton(
                 onpressed: () {
-                  if (validate(
+                    if (AppData.isValidSlietEmail(
                     widget.authProvider.emailController.text.trim(),
                   )) {
                     widget.authProvider.sendOTP(context);
@@ -120,8 +131,5 @@ class _NewHereState extends State<NewHere> {
     );
   }
 
-  bool validate(value) {
-    final RegExp regex = RegExp(r'^[a-zA-Z0-9._%+-]+@thapar\.edu$');
-    return regex.hasMatch(value);
-  }
+  bool validate(String value) => AppData.isValidSlietEmail(value);
 }

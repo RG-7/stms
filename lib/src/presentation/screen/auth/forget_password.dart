@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:ttms_student/src/data/provider/auth.dart';
+import '/src/data/provider/auth.dart';
 
 import '../../../../export.dart';
 
@@ -58,13 +58,20 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               // EMAIL TEXTFIELD
               AppTextField(
                 controller: widget.authProvider.emailController,
-                validator: (value) {
-                  final RegExp regex =
-                      RegExp(r'^[a-zA-Z0-9._%+-]+@thapar\.edu$');
-                  return regex.hasMatch(value);
+                validator: AppData.isValidSlietEmail,
+                onChanged: (value) {
+                  final normalizedValue = AppData.normalizeEmail(value);
+                  if (normalizedValue != value) {
+                    widget.authProvider.emailController.value =
+                        TextEditingValue(
+                      text: normalizedValue,
+                      selection: TextSelection.collapsed(
+                          offset: normalizedValue.length),
+                    );
+                  }
                 },
                 icon: CupertinoIcons.mail,
-                hintText: '***@thapar.edu',
+                hintText: '***@sliet.edu',
                 errorMessage: AppData.emailErrorMessage,
               ),
               const SizedBox(

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:ttms_student/core/constants/utlis.dart';
-import 'package:ttms_student/src/data/provider/auth.dart';
+import '/core/constants/utlis.dart';
+import '/src/data/provider/auth.dart';
 
 import '../../../../export.dart';
 

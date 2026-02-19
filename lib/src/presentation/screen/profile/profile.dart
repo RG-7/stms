@@ -3,8 +3,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ttms_student/src/data/provider/user.dart';
-import 'package:ttms_student/src/presentation/screen/selection/selection.dart';
+import '/src/data/provider/user.dart';
+import '/src/presentation/screen/selection/selection.dart';
 
 import '../../../../export.dart';
 import '../../../data/provider/schedule.dart';

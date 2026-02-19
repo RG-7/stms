@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:ttms_student/src/data/provider/schedule.dart';
-import 'package:ttms_student/src/data/model/schedule.dart';
-import 'package:ttms_student/src/data/provider/user.dart';
-import 'package:ttms_student/src/presentation/screen/check_slot/check_slot.dart';
-import 'package:ttms_student/src/presentation/screen/room_avability_check/room_avability_check.dart';
-import 'package:ttms_student/src/presentation/widget/common_loader.dart';
+import '/src/data/provider/schedule.dart';
+import '/src/data/model/schedule.dart';
+import '/src/data/provider/user.dart';
+import '/src/presentation/screen/check_slot/check_slot.dart';
+import '/src/presentation/screen/room_avability_check/room_avability_check.dart';
+import '/src/presentation/widget/common_loader.dart';
 import '../../../../export.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,15 +21,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     ScheduleProvider scheduleP = context.read<ScheduleProvider>(); // Access provider directly
-    UserProvider user = context.read<UserProvider>(); // Access provider directly
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (user.user.designation == 'Professor') {
-        scheduleP.updateDate(DateTime.now(), context);
-        scheduleP.fetchTTOfFcaultyByDateAndCode(context);
-      } else {
-        scheduleP.updateDate(DateTime.now(), context);
-        scheduleP.fetchSubGroupSchedule(context);
-      }
+      scheduleP.updateDate(DateTime.now(), context);
     });
   }
 

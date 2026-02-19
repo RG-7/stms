@@ -1,6 +1,6 @@
 
 import 'package:provider/provider.dart';
-import 'package:ttms_student/src/presentation/widget/common_loader.dart';
+import '/src/presentation/widget/common_loader.dart';
 
 import '../../../../export.dart';
 import '../../../data/model/schedule.dart';

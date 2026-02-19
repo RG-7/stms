@@ -2,7 +2,7 @@
 
 import 'package:provider/provider.dart';
 
-import 'package:ttms_student/src/data/provider/schedule.dart';
+import '/src/data/provider/schedule.dart';
 
 import '/export.dart';
 

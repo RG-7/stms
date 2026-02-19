@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:ttms_student/src/data/provider/auth.dart';
+import '/src/data/provider/auth.dart';
 import '../../../../export.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   AuthProvider authProvider = AuthProvider();
 
   // bool isValidEmail(String email) {
-  //   final RegExp regex = RegExp(r'^[a-zA-Z0-9._%+-]+@thapar\.edu$');
+  //   final RegExp regex = RegExp(r'^[a-zA-Z0-9._%+-]+@sliet\\.edu$');
   //   return regex.hasMatch(email);
   // }
 
@@ -97,13 +97,19 @@ class _LoginPageState extends State<LoginPage> {
                   // EMAIL TEXTFIELD
                   AppTextField(
                     controller: authProvider.emailController,
-                    validator: (value) {
-                      final RegExp regex =
-                          RegExp(r'^[a-zA-Z0-9._%+-]+@thapar\.edu$');
-                      return regex.hasMatch(value);
+                    validator: AppData.isValidSlietEmail,
+                    onChanged: (value) {
+                      final normalizedValue = AppData.normalizeEmail(value);
+                      if (normalizedValue != value) {
+                        authProvider.emailController.value = TextEditingValue(
+                          text: normalizedValue,
+                          selection: TextSelection.collapsed(
+                              offset: normalizedValue.length),
+                        );
+                      }
                     },
                     icon: CupertinoIcons.mail,
-                    hintText: '***@thapar.edu',
+                    hintText: '***@sliet.edu',
                     errorMessage: AppData.emailErrorMessage,
                   ),
                   const SizedBox(
@@ -127,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                       return value.isNotEmpty;
                     },
                     isPassword: true,
-                    hintText: 'Tiet@1234',
+                    hintText: 'Enter your password',
                     errorMessage: AppData.passwordErrorMessage,
                   ),
 

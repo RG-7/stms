@@ -2,6 +2,16 @@
 class AppData {
   const AppData._();
 
+    static final RegExp _slietEmailRegex =
+            RegExp(r'^[a-zA-Z0-9._%+-]+@sliet\.edu$');
+
+    static String normalizeEmail(String value) => value.trim().toLowerCase();
+
+    static bool isValidSlietEmail(String value) {
+        final normalizedValue = normalizeEmail(value);
+        return _slietEmailRegex.hasMatch(normalizedValue);
+    }
+
   
 
   static const onBoardingHead1 = 'Welcome to SCHED';
@@ -24,7 +34,7 @@ class AppData {
   static const ohoh = 'oh oh !';
   static const noInternetDesc = 'Looks like you don’t have internet connection';
 
-  static const appName = 'TTMS';
+  static const appName = 'STMS';
 
   // login
   static const loginTitle = 'Login';
@@ -42,7 +52,7 @@ class AppData {
   static const orTitle = 'OR';
   static const newHereTile = 'New Here ?';
 
-  static const emailErrorMessage = 'Enter your thapar email address!';
+  static const emailErrorMessage = 'Enter your SLIET email address!';
   static const passwordErrorMessage = 'Password Can\'t be empty!';
 
   static const congratulationsTitle = 'Congratulations!';
@@ -50,9 +60,9 @@ class AppData {
   static const agreeDesc =
       'On submitting you agree to receive automatic generated email.';
   static const firstTimeDesc =
-      'To access your profile you just need to type your Thapar Email. We will reach out to you within no time.';
+      'To access your profile you just need to type your SLIET Email. We will reach out to you within no time.';
   static const forgetPassDesc =
-      'Just type your Thapar\'s valid email. Will Send you a reset link shortly.';
+      'Just type your SLIET\'s valid email. Will Send you a reset link shortly.';
   static const regNumber = 'Regestration Number';
   static const staffIdNumber = 'Staff Identification Number';
   static const mobileNumber = 'Mobile Number';
