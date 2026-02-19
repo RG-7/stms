@@ -1,6 +1,6 @@
 {
-    "name": "ttms_student",
-    "short_name": "ttms_student",
+    "name": "STMS",
+    "short_name": "STMS",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
