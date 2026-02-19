@@ -106,7 +106,7 @@ class _NewHereState extends State<NewHere> {
               // submit button
               LightBlueTextButton(
                 onpressed: () {
-                    if (AppData.isValidSlietEmail(
+                  if (AppData.isValidSlietEmail(
                     widget.authProvider.emailController.text.trim(),
                   )) {
                     widget.authProvider.sendOTP(context);

@@ -105,7 +105,9 @@ class ScheduleCard extends StatelessWidget {
                         width: 10,
                       ),
                       Text(
-                        sched.isTeacher ? schedule.subGroup : schedule.facultyCode,
+                        sched.isTeacher
+                            ? schedule.subGroup
+                            : schedule.facultyCode,
                         style: bodyStyle2Grey.copyWith(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),

@@ -137,8 +137,8 @@ class AuthServices {
           schedProvider.clearSelectedSubGroup();
           final userProvider =
               Provider.of<UserProvider>(context, listen: false);
-            debugPrint(userProvider.user.toJson());
-            debugPrint('User token: ${userProvider.token}');
+          debugPrint(userProvider.user.toJson());
+          debugPrint('User token: ${userProvider.token}');
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(

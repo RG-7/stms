@@ -13,7 +13,7 @@ class DateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    
+
     return Container(
       width: width <= 360 ? 50 : 55,
       height: 75,

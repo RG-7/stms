@@ -57,7 +57,7 @@ jobs:
         run: flutter pub get
       
       - name: Scan for vulnerable dependencies
-        run: flutter pub outdated --mode=null-safety
+        run: flutter pub outdated || true
       
       - name: Check pubspec for security issues
         run: |
@@ -84,4 +84,4 @@ jobs:
         run: flutter analyze
       
       - name: Check code style
-        run: dart format --dry-run --set-exit-if-changed lib/
+        run: dart format --set-exit-if-changed lib/

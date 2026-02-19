@@ -26,7 +26,7 @@ class User {
     required this.deptId,
     required this.empId,
     required this.designation, // not required
-    required this.facultyCode, // not required 
+    required this.facultyCode, // not required
   });
 
   Map<String, dynamic> toMap() {

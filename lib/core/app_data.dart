@@ -1,18 +1,15 @@
-
 class AppData {
   const AppData._();
 
-    static final RegExp _slietEmailRegex =
-            RegExp(r'^[a-zA-Z0-9._%+-]+@sliet\.edu$');
+  static final RegExp _slietEmailRegex =
+      RegExp(r'^[a-zA-Z0-9._%+-]+@sliet\.edu$');
 
-    static String normalizeEmail(String value) => value.trim().toLowerCase();
+  static String normalizeEmail(String value) => value.trim().toLowerCase();
 
-    static bool isValidSlietEmail(String value) {
-        final normalizedValue = normalizeEmail(value);
-        return _slietEmailRegex.hasMatch(normalizedValue);
-    }
-
-  
+  static bool isValidSlietEmail(String value) {
+    final normalizedValue = normalizeEmail(value);
+    return _slietEmailRegex.hasMatch(normalizedValue);
+  }
 
   static const onBoardingHead1 = 'Welcome to SCHED';
   static const onBoardingHead2 = 'Real-Time Collaboration';

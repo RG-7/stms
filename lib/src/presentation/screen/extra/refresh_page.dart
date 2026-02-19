@@ -7,10 +7,12 @@ class RefreshPage extends StatelessWidget {
   const RefreshPage({super.key});
 
   void _checkConnectivityAndNavigateBack(BuildContext context) {
-    final connectivityProvider = Provider.of<ConnectivityProvider>(context, listen: false);
+    final connectivityProvider =
+        Provider.of<ConnectivityProvider>(context, listen: false);
 
     // Check if the connection has been restored
-    if (!connectivityProvider.connectionStatus.contains(ConnectivityResult.none)) {
+    if (!connectivityProvider.connectionStatus
+        .contains(ConnectivityResult.none)) {
       // Navigate back to the previous page
       Navigator.pop(context);
     } else {

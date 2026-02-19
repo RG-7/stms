@@ -13,7 +13,7 @@ List<ClassType> classType = [
   const ClassType(
     'Tutorial',
     Icon(CupertinoIcons.smallcircle_fill_circle, color: Colors.blue),
-  ), 
+  ),
   const ClassType(
     'Lab',
     Icon(CupertinoIcons.smallcircle_fill_circle, color: Colors.red),
@@ -24,8 +24,7 @@ List<ClassType> classType = [
   ),
 ];
 
-
-class Classes{
+class Classes {
   final String department;
   final String branch;
   final String year;
@@ -43,7 +42,7 @@ List<Classes> allClasses = [
   const Classes('ME', 'CAF', '2', 'CAF-3'),
 ];
 
-class Subject{
+class Subject {
   final String subjectName;
   final String subjectCode;
 
@@ -55,5 +54,4 @@ List<Subject> allSubjects = [
   const Subject('Machine Learning', 'UCS504'),
   const Subject('Cloud Computing', 'UCS415'),
   const Subject('Humanities', 'UMA004'),
-
 ];

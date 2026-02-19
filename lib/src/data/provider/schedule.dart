@@ -143,7 +143,8 @@ class ScheduleProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchTTOfFcaultyByDateAndCode(BuildContext context, String fc) async {
+  Future<void> fetchTTOfFcaultyByDateAndCode(
+      BuildContext context, String fc) async {
     _isLoading = true;
     _error = null;
     notifyListeners();
@@ -151,7 +152,7 @@ class ScheduleProvider extends ChangeNotifier {
     try {
       // Fetch data for the selected subgroup and date
       final result =
-          await _scheduleService.fetchFacultyTTByDateAndCode(context,fc);
+          await _scheduleService.fetchFacultyTTByDateAndCode(context, fc);
 
       // Update schedule
       _schedule = result;

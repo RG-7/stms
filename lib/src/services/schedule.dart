@@ -21,7 +21,7 @@ class ScheduleService {
     final sched = Provider.of<ScheduleProvider>(context, listen: false);
     List<Schedule> productList = [];
     final Uri url =
-      Uri.parse('$baseUrl/tt/subgroup/${sched.selectedSubGroup}/$date');
+        Uri.parse('$baseUrl/tt/subgroup/${sched.selectedSubGroup}/$date');
     try {
       http.Response res = await http.get(
         Uri.parse('$url'),

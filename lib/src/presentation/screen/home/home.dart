@@ -20,7 +20,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    ScheduleProvider scheduleP = context.read<ScheduleProvider>(); // Access provider directly
+    ScheduleProvider scheduleP =
+        context.read<ScheduleProvider>(); // Access provider directly
     WidgetsBinding.instance.addPostFrameCallback((_) {
       scheduleP.updateDate(DateTime.now(), context);
     });
@@ -257,7 +258,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         ),
-                         SizedBox(
+                        SizedBox(
                           height: width <= 360 ? 10 : 5,
                         ),
 

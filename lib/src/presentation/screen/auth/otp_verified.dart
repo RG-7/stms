@@ -17,7 +17,10 @@ class _OTPVerifiedState extends State<OTPVerified> {
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => ResetPassword(email: widget.email,)),
+        MaterialPageRoute(
+            builder: (context) => ResetPassword(
+                  email: widget.email,
+                )),
       );
     });
   }

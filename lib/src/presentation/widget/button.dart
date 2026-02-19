@@ -26,7 +26,6 @@ class LightBlueTextButton extends StatelessWidget {
         ),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
-            
             borderRadius: BorderRadius.circular(
               10,
             ),

@@ -1,8 +1,6 @@
-
 import 'package:flutter_svg/svg.dart';
 
 import '../../../export.dart';
-
 
 class ReadOnlyTextField extends StatefulWidget {
   final IconData icon;
@@ -13,7 +11,8 @@ class ReadOnlyTextField extends StatefulWidget {
     super.key,
     required this.icon,
     required this.hintText,
-    this.isSvg, this.svgPath,
+    this.isSvg,
+    this.svgPath,
   });
 
   @override
@@ -33,7 +32,8 @@ class _ReadOnlyTextFieldState extends State<ReadOnlyTextField> {
                 padding: const EdgeInsets.all(12.0),
                 child: SvgPicture.asset(
                   widget.svgPath!, // Assuming hintText is the path to the SVG
-                  colorFilter: const ColorFilter.mode(AppColor.lightBlue, BlendMode.srcIn),
+                  colorFilter: const ColorFilter.mode(
+                      AppColor.lightBlue, BlendMode.srcIn),
                   width: 24,
                   height: 24,
                 ),

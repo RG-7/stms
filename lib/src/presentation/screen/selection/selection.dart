@@ -73,11 +73,11 @@ class _SelectSubGroupState extends State<SelectSubGroup> {
                   children: [
                     Text(
                       'Select Your SubGroup!',
-                      style:
-                          h1StyleBlue.copyWith(fontSize: width <= 360 ? 25 : 30),
+                      style: h1StyleBlue.copyWith(
+                          fontSize: width <= 360 ? 25 : 30),
                     ),
                     const SizedBox(height: 20),
-      
+
                     // Searchable TextField
                     TextField(
                       controller: _searchController,
@@ -95,17 +95,17 @@ class _SelectSubGroupState extends State<SelectSubGroup> {
                       },
                     ),
                     const SizedBox(height: 10),
-      
+
                     // Dropdown Container
                     if (_isDropdownVisible)
                       Container(
-                        
                         constraints: BoxConstraints(
                           maxHeight: filteredSubGroups.isNotEmpty
                               ? (filteredSubGroups.length > 5
                                   ? 250
                                   : 50.0 *
-                                      filteredSubGroups.length) // Dynamic height
+                                      filteredSubGroups
+                                          .length) // Dynamic height
                               : 0, // No data hides dropdown
                         ),
                         decoration: BoxDecoration(
@@ -124,23 +124,24 @@ class _SelectSubGroupState extends State<SelectSubGroup> {
                                       // Update subgroup selection
                                       sched.updateSelectedSubGroup(
                                           filteredSubGroups[index]);
-      
+
                                       // Update the text field
                                       _searchController.text =
                                           filteredSubGroups[index];
-      
+
                                       // Hide dropdown
                                       setState(() {
                                         _isDropdownVisible = false;
                                       });
-      
+
                                       sched.fetchSubGroupSchedule(context);
-      
+
                                       // Navigate to Dashboard with the selected subgroup
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => const DashBoard(),
+                                          builder: (context) =>
+                                              const DashBoard(),
                                         ),
                                       );
                                     },

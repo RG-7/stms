@@ -39,7 +39,7 @@ final bodyStyle2 = GoogleFonts.montserrat(
   ),
 );
 
-final whiteButtonTextStyle =  GoogleFonts.montserrat(
+final whiteButtonTextStyle = GoogleFonts.montserrat(
   fontWeight: FontWeight.w600,
   textStyle: const TextStyle(
     color: AppColor.white,
@@ -48,7 +48,7 @@ final whiteButtonTextStyle =  GoogleFonts.montserrat(
   ),
 );
 
-final blackButtonTextStyle =  GoogleFonts.montserrat(
+final blackButtonTextStyle = GoogleFonts.montserrat(
   fontWeight: FontWeight.w600,
   textStyle: const TextStyle(
     color: AppColor.black,
@@ -57,7 +57,7 @@ final blackButtonTextStyle =  GoogleFonts.montserrat(
   ),
 );
 
-final smallErrorMessage =  GoogleFonts.montserrat(
+final smallErrorMessage = GoogleFonts.montserrat(
   fontWeight: FontWeight.w500,
   textStyle: const TextStyle(
     color: Colors.red,
@@ -83,7 +83,6 @@ final textfieldHintTextStyle = GoogleFonts.montserrat(
     fontWeight: FontWeight.w500,
   ),
 );
-
 
 final bodyStyle2Grey = GoogleFonts.montserrat(
   fontWeight: FontWeight.w500,

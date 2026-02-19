@@ -24,8 +24,8 @@ class ConnectivityProvider extends ChangeNotifier {
   }
 
   void _listenToConnectivityChanges() {
-    _connectivitySubscription =
-        _connectivity.onConnectivityChanged.listen((List<ConnectivityResult> result) {
+    _connectivitySubscription = _connectivity.onConnectivityChanged
+        .listen((List<ConnectivityResult> result) {
       _connectionStatus = result;
       notifyListeners();
     });
