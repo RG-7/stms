@@ -1,4 +1,4 @@
-name: Release - Create GitHub Release
+name: Release - Build & Publish
 
 on:
   push:
@@ -6,8 +6,164 @@ on:
       - 'v*'
 
 jobs:
+  build-android-apk:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Build APK
+        run: flutter build apk --split-per-abi --release
+      
+      - name: Upload APK Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-apk
+          path: build/app/outputs/flutter-apk/
+
+  build-android-aab:
+    name: Build Android App Bundle (AAB)
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Build AAB
+        run: flutter build appbundle --release
+      
+      - name: Upload AAB Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-aab
+          path: build/app/outputs/bundle/release/
+
+  build-web:
+    name: Build Web App
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Build Web
+        run: flutter build web --release --web-renderer html
+      
+      - name: Upload Web Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-build
+          path: build/web/
+
+  build-windows:
+    name: Build Windows Executable
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Build Windows
+        run: flutter build windows --release
+      
+      - name: Create Windows ZIP
+        shell: pwsh
+        run: |
+          cd build/windows/runner/Release
+          Compress-Archive -Path * -DestinationPath stms-windows.zip
+          Move-Item stms-windows.zip C:\stms-windows.zip
+      
+      - name: Upload Windows Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-exe
+          path: C:/stms-windows.zip
+
+  build-linux:
+    name: Build Linux App
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Build Linux
+        run: flutter build linux --release
+      
+      - name: Create Linux TAR
+        run: |
+          cd build/linux/x64/release/bundle
+          tar -czf stms-linux.tar.gz *
+          mv stms-linux.tar.gz ../../../../..
+      
+      - name: Upload Linux Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-app
+          path: build/linux/x64/release/bundle/stms-linux.tar.gz
+
   create-release:
-    name: Create GitHub Release
+    name: Create Release & Publish
+    needs: [build-android-apk, build-android-aab, build-web, build-windows, build-linux]
     runs-on: ubuntu-latest
     
     steps:
@@ -23,7 +179,6 @@ jobs:
       - name: Generate Changelog
         id: changelog
         run: |
-          # Generate changelog from git log since last tag
           PREV_TAG=$(git describe --tags --abbrev=0 ${{ steps.tag.outputs.tag_name }}^ 2>/dev/null || echo "")
           if [ -z "$PREV_TAG" ]; then
             CHANGELOG=$(git log --oneline --format="%h - %s" | head -20)
@@ -33,6 +188,9 @@ jobs:
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
           echo "$CHANGELOG" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
+      
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
       
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -48,34 +206,64 @@ jobs:
             
             ${{ steps.changelog.outputs.changelog }}
             
-            ## Installation
+            ## Downloads & Installation
             
-            - **Android:** Download APK from Artifacts section
-            - **Web:** Build outputs available in artifacts
-            - **Desktop:** Linux, Windows, macOS builds available
+            ### 📱 Mobile
+            - **Android APK**: `app-release.apk` - Direct installation
+            - **Android AAB**: `app-release.aab` - Google Play Store upload
+            
+            ### 🌐 Web
+            - **Web Build**: Cross-platform web version ready for deployment
+            
+            ### 🖥️ Desktop
+            - **Windows**: `stms-windows.zip` - Extract and run
+            - **Linux**: `stms-linux.tar.gz` - Extract and run
             
             ## Platform Support
             
-            - ✅ Android
-            - ✅ iOS
-            - ✅ Web
-            - ✅ Windows
-            - ✅ Linux
-            - ✅ macOS
+            - ✅ Android (API 21+)
+            - ✅ Web (Chrome, Firefox, Safari)
+            - ✅ Windows 10/11
+            - ✅ Linux (Ubuntu 18.04+)
             
             ## Key Features
             
-            - SLIET institutional branding
-            - Secure @sliet.edu authentication
-            - Schedule management system
-            - Multi-platform support
-            - Responsive design
-            - OTP-based verification
+            - 🏫 SLIET institutional branding
+            - 🔐 Secure @sliet.edu authentication
+            - 📅 Schedule management system
+            - 📱 Multi-platform support
+            - 🎨 Responsive design
+            - ✅ OTP-based verification
+            
+            ## Installation Instructions
+            
+            **Android:**
+            - Download `app-release.apk`
+            - Enable installation from unknown sources
+            - Install the APK file
+            
+            **Windows:**
+            - Download and extract `stms-windows.zip`
+            - Run `stms.exe`
+            
+            **Linux:**
+            - Download and extract `stms-linux.tar.gz`
+            - Run `./stms`
+            
+            **Web:**
+            - Use the web build with any web server
+            - Or visit the live demo at our website
             
             ---
             
-            For issues or feedback, please open an issue on GitHub.
+            For issues or feedback, please [open an issue](https://github.com/RG-7/stms/issues).
           draft: false
           prerelease: false
+          files: |
+            android-apk/*/*.apk
+            android-aab/release/*.aab
+            web-build/**
+            windows-exe/*.zip
+            linux-app/*.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
