@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:ttms_student/src/data/provider/auth.dart';
+import '/src/data/provider/auth.dart';
 
 Widget otpBoxes(BuildContext context, AuthProvider authProvider,
     GlobalKey<FormState> formKey) {

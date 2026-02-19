@@ -3,13 +3,15 @@
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:device_frame/device_frame.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ttms_student/src/data/provider/auth.dart';
+import '/src/data/provider/auth.dart';
 import '/src/data/provider/user.dart';
-import 'package:ttms_student/src/presentation/screen/extra/refresh_page.dart';
-import 'package:ttms_student/src/services/auth.dart';
+import '/src/presentation/screen/extra/refresh_page.dart';
+import '/src/services/auth.dart';
 import 'src/data/provider/connectivity.dart';
 import 'src/data/provider/schedule.dart';
 import 'src/presentation/screen/selection/selection.dart';
@@ -25,7 +27,7 @@ class MyHttpOverrides extends HttpOverrides {
 
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
-  await dotenv.load(fileName: '.env');
+  await dotenv.load(fileName: 'assets/env');
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => ScheduleProvider()),
@@ -45,6 +47,27 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool _isLoading = true;
+
+  Widget _buildMobileViewport(BuildContext context, Widget? child) {
+    final content = child ?? const SizedBox.shrink();
+    final width = MediaQuery.of(context).size.width;
+
+    if (!kIsWeb || width < 430) {
+      return content;
+    }
+
+    return ColoredBox(
+      color: AppColor.lightGrey,
+      child: Center(
+        child: DeviceFrame(
+          device: Devices.ios.iPhone13,
+          isFrameVisible: true,
+          orientation: Orientation.portrait,
+          screen: content,
+        ),
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -86,13 +109,15 @@ class _MyAppState extends State<MyApp> {
       builder: (context, connectivityProvider, child) {
         if (connectivityProvider.connectionStatus
             .contains(ConnectivityResult.none)) {
-          return const MaterialApp(
+          return MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: RefreshPage(), // Show No Internet Page
+            builder: (context, child) => _buildMobileViewport(context, child),
+            home: const RefreshPage(), // Show No Internet Page
           );
         }
         return MaterialApp(
           debugShowCheckedModeBanner: false,
+          builder: (context, child) => _buildMobileViewport(context, child),
           home: _isLoading
               ? const SplashScreen() // Show splash screen while app initializes
               : userPro.token != null && userPro.token!.isNotEmpty
