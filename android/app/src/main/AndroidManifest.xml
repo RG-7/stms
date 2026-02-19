@@ -1,7 +1,7 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.thapartimetable.ttms">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="dev.ratn.stms">
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:label="TTMS"
+        android:label="STMS"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
