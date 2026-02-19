@@ -40,7 +40,7 @@ jobs:
         run: flutter build apk --split-per-abi --release
       
       - name: Upload APK to Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: production-apk
           path: build/app/outputs/flutter-apk/*.apk
@@ -73,7 +73,7 @@ jobs:
         run: flutter build appbundle --release
       
       - name: Upload AAB to Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: production-aab
           path: build/app/outputs/bundle/release/app-release.aab
@@ -100,7 +100,7 @@ jobs:
         run: flutter build web --release --web-renderer html
       
       - name: Upload Web to Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: production-web
           path: build/web/
@@ -134,7 +134,7 @@ jobs:
         run: flutter build ios --release --no-codesign
       
       - name: Upload iOS build to Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: production-ios
           path: build/ios/iphoneos/

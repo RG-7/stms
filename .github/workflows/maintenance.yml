@@ -134,7 +134,7 @@ jobs:
           echo "Dart Files: $(grep -oP '\d+(?= total)' metrics/loc.txt)" >> metrics/report.md
       
       - name: Upload metrics
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: project-metrics
           path: metrics/

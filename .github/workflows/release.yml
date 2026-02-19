@@ -32,7 +32,7 @@ jobs:
         run: flutter build apk --split-per-abi --release
       
       - name: Upload APK Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: android-apk
           path: build/app/outputs/flutter-apk/
@@ -63,7 +63,7 @@ jobs:
         run: flutter build appbundle --release
       
       - name: Upload AAB Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: android-aab
           path: build/app/outputs/bundle/release/
@@ -88,7 +88,7 @@ jobs:
         run: flutter build web --release --web-renderer html
       
       - name: Upload Web Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: web-build
           path: build/web/
@@ -120,7 +120,7 @@ jobs:
           Move-Item stms-windows.zip C:\stms-windows.zip
       
       - name: Upload Windows Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: windows-exe
           path: C:/stms-windows.zip
@@ -156,7 +156,7 @@ jobs:
           mv stms-linux.tar.gz ../../../../..
       
       - name: Upload Linux Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: linux-app
           path: build/linux/x64/release/bundle/stms-linux.tar.gz
@@ -190,7 +190,7 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
       
       - name: Download all artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
       
       - name: Create Release
         uses: softprops/action-gh-release@v1
