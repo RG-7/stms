@@ -1,0 +1,81 @@
+name: Release - Create GitHub Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  create-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Get Tag Name
+        id: tag
+        run: echo "tag_name=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+      
+      - name: Generate Changelog
+        id: changelog
+        run: |
+          # Generate changelog from git log since last tag
+          PREV_TAG=$(git describe --tags --abbrev=0 ${{ steps.tag.outputs.tag_name }}^ 2>/dev/null || echo "")
+          if [ -z "$PREV_TAG" ]; then
+            CHANGELOG=$(git log --oneline --format="%h - %s" | head -20)
+          else
+            CHANGELOG=$(git log $PREV_TAG..${{ steps.tag.outputs.tag_name }} --oneline --format="%h - %s")
+          fi
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.tag.outputs.tag_name }}
+          name: STMS Student App ${{ steps.tag.outputs.tag_name }}
+          body: |
+            # STMS Student App Release ${{ steps.tag.outputs.tag_name }}
+            
+            **Release Date:** $(date +%Y-%m-%d)
+            
+            ## What's Changed
+            
+            ${{ steps.changelog.outputs.changelog }}
+            
+            ## Installation
+            
+            - **Android:** Download APK from Artifacts section
+            - **Web:** Build outputs available in artifacts
+            - **Desktop:** Linux, Windows, macOS builds available
+            
+            ## Platform Support
+            
+            - ✅ Android
+            - ✅ iOS
+            - ✅ Web
+            - ✅ Windows
+            - ✅ Linux
+            - ✅ macOS
+            
+            ## Key Features
+            
+            - SLIET institutional branding
+            - Secure @sliet.edu authentication
+            - Schedule management system
+            - Multi-platform support
+            - Responsive design
+            - OTP-based verification
+            
+            ---
+            
+            For issues or feedback, please open an issue on GitHub.
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

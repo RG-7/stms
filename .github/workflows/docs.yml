@@ -1,0 +1,246 @@
+name: Documentation - GitHub Pages
+
+on:
+  push:
+    branches: [ sliet, main ]
+  workflow_dispatch:
+
+jobs:
+  generate-docs:
+    name: Generate Documentation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'latest'
+          channel: 'stable'
+      
+      - name: Install dependencies
+        run: flutter pub get
+      
+      - name: Generate documentation
+        run: |
+          mkdir -p docs
+          echo "# STMS Student App Documentation" > docs/index.md
+          echo "" >> docs/index.md
+          echo "## Project Overview" >> docs/index.md
+          echo "" >> docs/index.md
+          echo "STMS Student is a Flutter-based application for managing academic schedules and student information at SLIET." >> docs/index.md
+          echo "" >> docs/index.md
+          echo "### Platform Support" >> docs/index.md
+          echo "- ✅ Android" >> docs/index.md
+          echo "- ✅ iOS" >> docs/index.md
+          echo "- ✅ Web" >> docs/index.md
+          echo "- ✅ Windows" >> docs/index.md
+          echo "- ✅ Linux" >> docs/index.md
+          echo "- ✅ macOS" >> docs/index.md
+      
+      - name: Create architecture docs
+        run: |
+          cat > docs/architecture.md << 'EOF'
+          # Architecture Overview
+
+          ## Project Structure
+
+          ```
+          lib/
+          ├── core/              # Core utilities, styles, constants
+          ├── src/
+          │   ├── data/          # Data layer (providers, repositories)
+          │   ├── services/      # Business logic (API calls, auth)
+          │   └── presentation/  # UI layer (screens, widgets)
+          └── main.dart          # App entry point
+          ```
+
+          ## State Management
+
+          We use **Provider** pattern for state management:
+          - `AuthProvider`: Authentication state
+          - `UserProvider`: User information
+          - `ScheduleProvider`: Schedule data
+          - `ConnectivityProvider`: Network connectivity
+
+          ## Architecture Pattern
+
+          We follow **Clean Architecture** principles:
+
+          1. **Presentation Layer** (UI)
+             - Stateless/Stateful widgets
+             - Screen navigation
+             - User interactions
+
+          2. **Business Logic Layer** (Services)
+             - `AuthServices`: Authentication logic
+             - `ScheduleServices`: Schedule operations
+             - Error handling
+
+          3. **Data Layer** (Providers)
+             - State management with Provider
+             - Data persistence
+             - API communication
+
+          ## API Integration
+
+          - Base URL: Configured via `assets/env`
+          - Authentication: Token-based with SharedPreferences
+          - Email Validation: Strict @sliet.edu domain only
+          - Error Handling: Centralized error messages
+
+          ## Security
+
+          - HTTPS enforcement
+          - Secure token storage
+          - Email domain validation
+          - Input sanitization
+          EOF
+      
+      - name: Create setup docs
+        run: |
+          cat > docs/setup.md << 'EOF'
+          # Development Setup Guide
+
+          ## Prerequisites
+
+          - Flutter 3.x.x or later
+          - Dart SDK
+          - Android SDK (for Android development)
+          - Xcode (for iOS development)
+          - VS Code or Android Studio
+
+          ## Installation
+
+          1. Clone the repository
+             ```bash
+             git clone <repo-url>
+             cd app_frontend
+             git checkout sliet
+             ```
+
+          2. Get dependencies
+             ```bash
+             flutter pub get
+             ```
+
+          3. Setup environment
+             ```bash
+             cp assets/env.example assets/env
+             # Edit assets/env with your configuration
+             ```
+
+          4. Run the app
+             ```bash
+             flutter run
+             ```
+
+          ## Configuration
+
+          Create `assets/env` file with:
+          ```
+          BASE_URL=https://your-api-endpoint.com
+          API_KEY=your-api-key
+          ```
+
+          ## Building
+
+          ### Android
+          ```bash
+          flutter build apk --release
+          flutter build appbundle --release
+          ```
+
+          ### iOS
+          ```bash
+          flutter build ios --release
+          ```
+
+          ### Web
+          ```bash
+          flutter build web --release
+          ```
+
+          ### Windows/Linux/macOS
+          ```bash
+          flutter build windows --release
+          flutter build linux --release
+          flutter build macos --release
+          ```
+
+          ## Testing
+
+          ```bash
+          flutter test
+          flutter test --coverage
+          ```
+
+          ## Code Analysis
+
+          ```bash
+          flutter analyze
+          dart format lib/
+          ```
+          EOF
+      
+      - name: Create API docs
+        run: |
+          cat > docs/api.md << 'EOF'
+          # API Integration
+
+          ## Authentication
+
+          ### Login
+          - **Endpoint:** POST `/login`
+          - **Body:** `{ "email": "user@sliet.edu", "password": "password" }`
+          - **Response:** `{ "token": "...", "faculty": {...} }`
+
+          ### OTP Verification
+          - **Endpoint:** POST `/api/user/otp`
+          - **Body:** `{ "email": "user@sliet.edu" }`
+
+          ### Reset Password
+          - **Endpoint:** POST `/reset-password`
+          - **Body:** `{ "email": "user@sliet.edu", "newPassword": "..." }`
+
+          ## User Data
+
+          ### Get User Data
+          - **Endpoint:** GET `/faculty/:id`
+          - **Headers:** `{ "x-auth-token": "token" }`
+
+          ## Schedule
+
+          ### Get Schedule
+          - **Endpoint:** GET `/schedule`
+          - **Headers:** `{ "x-auth-token": "token" }`
+
+          ### Update Schedule Group
+          - **Endpoint:** POST `/schedule/group`
+          - **Body:** `{ "groupId": "..." }`
+
+          ## Error Handling
+
+          All endpoints return error responses in format:
+          ```json
+          {
+            "msg": "Error message",
+            "error": "error_code"
+          }
+          ```
+
+          Status codes:
+          - `200`: Success
+          - `400`: Bad Request
+          - `500`: Server Error
+          EOF
+      
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs

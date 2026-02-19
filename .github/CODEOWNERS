@@ -1,0 +1,32 @@
+# CODEOWNERS
+
+# This file identifies code owners for the repository
+
+# Default owners for everything
+* @dev/ratn @sliet-dev-team
+
+# Platform-specific ownership
+android/** @android-team
+ios/** @ios-team
+windows/** @windows-team
+linux/** @linux-team
+macos/** @macos-team
+web/** @web-team
+
+# Core logic
+lib/core/** @core-team
+lib/src/services/** @backend-team
+lib/src/data/** @data-team
+lib/src/presentation/** @ui-team
+
+# Configuration
+pubspec.yaml @maintainers
+.github/** @maintainers
+analysis_options.yaml @maintainers
+
+# Documentation
+*.md @docs-team
+docs/** @docs-team
+
+# Testing
+test/** @qa-team

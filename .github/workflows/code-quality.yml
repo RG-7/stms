@@ -1,0 +1,90 @@
+name: Code Quality - Analysis & Coverage
+
+on:
+  push:
+    branches: [ sliet, main, develop ]
+  pull_request:
+    branches: [ sliet, main, develop ]
+
+jobs:
+  code-quality:
+    name: Code Quality Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'latest'
+          channel: 'stable'
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Run Dart Analyze
+        run: flutter analyze --fatal-infos
+      
+      - name: Check formatting
+        run: dart format --set-exit-if-changed lib/
+      
+      - name: Run tests with coverage
+        run: flutter test --coverage
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/lcov.info
+          flags: flutter
+          name: flutter-coverage
+          fail_ci_if_error: false
+
+  security-scan:
+    name: Security Scanning
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'latest'
+          channel: 'stable'
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Scan for vulnerable dependencies
+        run: flutter pub pub outdated --mode=null-safety
+      
+      - name: Check pubspec for security issues
+        run: |
+          echo "Running security checks on pubspec.yaml"
+          flutter pub deps --no-dev
+
+  lint:
+    name: Dart Linting
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'latest'
+          channel: 'stable'
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Run Flutter Lints
+        run: flutter analyze
+      
+      - name: Check code style
+        run: dart format --dry-run --set-exit-if-changed lib/

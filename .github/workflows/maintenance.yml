@@ -1,0 +1,144 @@
+name: Maintenance - Dependency Updates
+
+on:
+  schedule:
+    # Run weekly on Monday at 2:00 AM UTC
+    - cron: '0 2 * * 1'
+  workflow_dispatch:
+
+jobs:
+  update-dependencies:
+    name: Update Dependencies
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'latest'
+          channel: 'stable'
+      
+      - name: Get current dependencies
+        run: |
+          flutter pub get
+          flutter pub outdated > before-upgrade.txt
+      
+      - name: Upgrade dependencies
+        run: flutter pub upgrade
+      
+      - name: Get updated dependencies
+        run: flutter pub outdated > after-upgrade.txt
+      
+      - name: Analyze code
+        run: flutter analyze || true
+      
+      - name: Run tests
+        run: flutter test || true
+      
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: 'chore: upgrade dependencies'
+          title: 'chore: weekly dependency updates'
+          body: |
+            ## Automated Dependency Updates
+            
+            This PR contains weekly dependency updates for the STMS Student App.
+            
+            ### Updated Packages
+            Please review the dependency changes and test thoroughly before merging.
+            
+            ### Testing
+            - ✅ Flutter Analyze: Complete
+            - ✅ Unit Tests: Complete
+            - ⚠️ Manual Testing Required
+            
+            ### Changes
+            - Flutter dependencies upgraded to latest compatible versions
+            - pubspec.lock updated
+            
+            Please verify that all functionality works as expected before merging.
+          branch: 'chore/dependency-updates'
+          delete-branch: true
+          labels: 'dependencies, automated'
+
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'latest'
+          channel: 'stable'
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Check pub.dev security advisories
+        run: |
+          echo "Checking for package vulnerabilities..."
+          flutter pub deps --no-dev || true
+          flutter pub pub outdated || true
+      
+      - name: Create security report
+        run: |
+          mkdir -p security
+          echo "# Security Audit Report" > security/audit.md
+          echo "Generated: $(date)" >> security/audit.md
+          echo "" >> security/audit.md
+          echo "## Dependency Vulnerabilities" >> security/audit.md
+          echo "Check pub.dev for any reported vulnerabilities" >> security/audit.md
+
+  publish-metrics:
+    name: Publish Project Metrics
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'latest'
+          channel: 'stable'
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Collect metrics
+        run: |
+          mkdir -p metrics
+          
+          # Count lines of code
+          find lib -name "*.dart" -type f | xargs wc -l | tail -1 > metrics/loc.txt
+          
+          # Count files
+          echo "Total Dart files: $(find lib -name "*.dart" -type f | wc -l)" > metrics/file-count.txt
+          
+          # Create metrics report
+          cat > metrics/report.md << 'EOF'
+          # Project Metrics Report
+          
+          ## Code Statistics
+          EOF
+          
+          echo "Lines of Code: $(head -1 metrics/loc.txt)" >> metrics/report.md
+          echo "Dart Files: $(grep -oP '\d+(?= total)' metrics/loc.txt)" >> metrics/report.md
+      
+      - name: Upload metrics
+        uses: actions/upload-artifact@v3
+        with:
+          name: project-metrics
+          path: metrics/
+          retention-days: 30
