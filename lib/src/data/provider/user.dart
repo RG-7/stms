@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ttms_student/src/data/model/user.dart';
-import 'package:ttms_student/src/data/provider/schedule.dart';
+import '/src/data/model/user.dart';
+import '/src/data/provider/schedule.dart';
 
 import '/export.dart';
 

@@ -108,9 +108,9 @@ class ScheduleProvider extends ChangeNotifier {
   Future<void> getSelectedSubGroup() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? selectedGroup = prefs.getString('selectedSubGroup');
-    if (selectedGroup != null) {
-      ScheduleProvider sched = ScheduleProvider();
-      sched.updateSelectedSubGroup(selectedGroup);
+    if (selectedGroup != null && selectedGroup.isNotEmpty) {
+      _selectedSubGroup = selectedGroup;
+      notifyListeners();
     }
   }
 
@@ -177,7 +177,10 @@ class ScheduleProvider extends ChangeNotifier {
 
     final user = Provider.of<UserProvider>(context, listen: false);
     if (user.user.designation == 'Professor') {
-      fetchTTOfFcaultyByDateAndCode(context, "SB");
+      final facultyCode = user.user.facultyCode;
+      if (facultyCode.isNotEmpty) {
+        fetchTTOfFcaultyByDateAndCode(context, facultyCode);
+      }
     } else {
       fetchSubGroupSchedule(context);
     }

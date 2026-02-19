@@ -6,11 +6,10 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ttms_student/core/constants/error_handling.dart';
-import 'package:ttms_student/export.dart';
-import 'package:ttms_student/src/data/provider/schedule.dart';
-import 'package:ttms_student/src/data/model/schedule.dart';
-import 'package:ttms_student/src/data/provider/user.dart';
+import '/core/constants/error_handling.dart';
+import '/export.dart';
+import '/src/data/provider/schedule.dart';
+import '/src/data/model/schedule.dart';
 
 import '../../core/constants/utlis.dart';
 
@@ -22,7 +21,7 @@ class ScheduleService {
     final sched = Provider.of<ScheduleProvider>(context, listen: false);
     List<Schedule> productList = [];
     final Uri url =
-        Uri.parse('$baseUrl/tt/subgroup/${sched.selectedSubGroup}/2025-01-20');
+      Uri.parse('$baseUrl/tt/subgroup/${sched.selectedSubGroup}/$date');
     try {
       http.Response res = await http.get(
         Uri.parse('$url'),
@@ -52,8 +51,6 @@ class ScheduleService {
   // get tt by faculty codeby date
   Future<List<Schedule>> fetchFacultyTTByDateAndCode(
       BuildContext context, String fc) async {
-    final sched = Provider.of<ScheduleProvider>(context, listen: false);
-    final user = Provider.of<UserProvider>(context, listen: false);
     List<Schedule> productList = [];
 
     try {
@@ -61,7 +58,7 @@ class ScheduleService {
       String? token = prefs.getString('x-auth-token');
 
       final Uri url = Uri.parse('$baseUrl/timetable/faculty/$fc');
-      print(url);
+      debugPrint(url.toString());
       http.Response res = await http.get(
         url,
         headers: <String, String>{
@@ -70,8 +67,8 @@ class ScheduleService {
         },
       );
 
-      print('Status Code: ${res.statusCode}');
-      print('Response Body: ${res.body}');
+      debugPrint('Status Code: ${res.statusCode}');
+      debugPrint('Response Body: ${res.body}');
 
       httpErrorhandle(
         resposne: res,
@@ -84,7 +81,7 @@ class ScheduleService {
         },
       );
     } catch (e) {
-      print('❌ Error fetching timetable: $e');
+      debugPrint('Error fetching timetable: $e');
       showSnackBar(context, 'Unable to fetch schedule');
     }
 
